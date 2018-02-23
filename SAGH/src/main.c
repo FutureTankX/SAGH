@@ -3,6 +3,7 @@
  *
  * Created: 15/2/2018 10:16:05 PM
  * Author : Moath
+ * v0.0.1
  */ 
 
 /**
@@ -34,7 +35,7 @@
 #include <main.h>
 #include <util/delay.h>
 
-
+#define ENABLE_TIMER0 1
 
 
 int main (void)
@@ -45,7 +46,12 @@ int main (void)
 	sysclk_init();
 	board_init();
 	ioport_init();
+	
+	#if ENABLE_TIMER0
 	Timer_Conf();
+	#endif
+	
+	PWM_DUTYCYCLE = 128;	
 	while (1);
 	{
 	

@@ -8,11 +8,20 @@
 #define _BV(bit) \
 (1 << (bit))
 
-#define PWM_OUT IOPORT_CREATE_PIN(PORTD,6)
-#define PWM_DUTYCYCLE OCR0A
 
+/*--TIMER0 CONF--*/
+#define TIMER0_OUT IOPORT_CREATE_PIN(PORTD,6)
+#define TIMER0_FREQ OCR0A
+/*--TIMER0 FREQ SELECT--*/
+#define TIMER0_30KHz 132
+#define TIMER0_33KHz 120
+#define TIMER0_36KHz 110
+#define TIMER0_38KHz 103
+#define TIMER0_40KHz 99
+#define TIMER0_56KHz 70
+/*--Debug--*/
 #define ENABLE_CLOCK_TIMER0 1
-#define ENABLE_FASTPWM_TIMER0 1
+#define ENABLE_CTC_TIMER0 1
 
 
 void Timer_Conf(void);
@@ -27,16 +36,12 @@ void Timer_Conf() {
 	PRR = (0 << PRTIM0);
 	#endif
 
-	#if ENABLE_FASTPWM_TIMER0
-	
-
-	ioport_set_pin_dir(PWM_OUT, IOPORT_DIR_OUTPUT);
-	/*DDRD |= _BV(PD6);*/
-	TCCR0A = _BV(COM0A1) | _BV(WGM00) | _BV(WGM01);
+	#if ENABLE_CTC_TIMER0
+	ioport_set_pin_dir(TIMER0_OUT, IOPORT_DIR_OUTPUT);
+	TCCR0A = _BV(COM0A0) | _BV(WGM01);
+	TIMSK0 = _BV(OCIE0A);
 	TCCR0B =_BV(CS00);
-	//PWM_DutyCycle = 255/2;
 	#endif
-	
 }
 
 #endif /* CONF_TIMER_H_ */

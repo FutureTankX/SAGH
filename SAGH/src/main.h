@@ -9,12 +9,16 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-#include <avr/io.h>
+#include <util/delay.h>
+#include <asf.h>
 #include <conf_timer.h>
+#include <conf_uart.h>
 #include <io/io.h>
+
 
 #define HIGH 1
 #define LOW 0
+
 
 
 #endif /* MAIN_H_ */

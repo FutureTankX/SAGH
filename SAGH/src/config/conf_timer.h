@@ -5,9 +5,9 @@
  *  Author: Moath
  */ 
 
-#define _BV(bit) \
-(1 << (bit))
 
+#ifndef CONF_TIMER_H_
+#define CONF_TIMER_H_
 
 /*--TIMER0 CONF--*/
 #define TIMER0_OUT IOPORT_CREATE_PIN(PORTD,6)
@@ -32,8 +32,7 @@
 void Timer0_Conf(void);
 void Timer1_Conf(void);
 
-#ifndef CONF_TIMER_H_
-#define CONF_TIMER_H_
+
 
 void Timer0_Conf() {
 	
@@ -45,7 +44,7 @@ void Timer0_Conf() {
 	ioport_set_pin_dir(TIMER0_OUT, IOPORT_DIR_OUTPUT);
 	TCCR0A = _BV(COM0A0) | _BV(WGM01);
 	TIMSK0 = _BV(OCIE0A);
-	TCCR0B =_BV(CS00);
+	TCCR0B = _BV(CS00);
 	#endif
 }
 

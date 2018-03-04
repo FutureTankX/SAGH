@@ -3,7 +3,7 @@
  *
  * Created: 15/2/2018 10:16:05 PM
  *  Author: Moath
- *		v0.0.4
+ *		v0.0.5
  */ 
 /*
  * Include header files for all drivers that have been imported from
@@ -14,12 +14,12 @@
  */
 #define F_CPU 8000000UL
 
-#include <asf.h>
+#include <stdint.h>
+#include <avr/io.h>
+#include <avr/sfr_defs.h>
 #include <main.h>
-#include <util/delay.h>
 
 volatile bool flag;
-
 
 #define ENABLE_TIMER0 true	
 #define ENABLE_TIMER1 true
@@ -38,6 +38,8 @@ int main (void)
 
 	/* Initializes the IOPORT service */
 	ioport_init();
+	/* Initializes the USART */
+	USART_Init(UBRR);
 	/* Enable Global Interrupt. */
 	cpu_irq_enable();
 	
@@ -66,6 +68,7 @@ ISR(TIMER1_CAPT_vect)
 	cpu_irq_disable();
 	flag = !flag;
 	LED(flag);
+	printf("STATS of LED %d \r\n",flag);
 	delay_ms(200);
 	cpu_irq_enable();
 } 

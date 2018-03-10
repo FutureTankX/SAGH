@@ -14,11 +14,25 @@
 #include <conf_timer.h>
 #include <conf_uart.h>
 #include <io/io.h>
+#include <LCD/nokia5110.h>
 
 
 #define HIGH 1
 #define LOW 0
 
+void WDT_off(void);
 
+void WDT_off(void)
+{
+	cpu_irq_disable();
+	/* Clear WDRF in MCUSR */
+	MCUSR &=~ _BV(WDRF);
+	/* Write logical one to WDCE and WDE */
+	/* Keep old pre-scaler setting to prevent unintentional time-out */
+	WDTCSR |= _BV(WDCE) | _BV(WDE);
+	/* Turn off WDT */
+	WDTCSR = 0x00;
+	cpu_irq_enable();
+}
 
 #endif /* MAIN_H_ */

@@ -21,6 +21,9 @@
 #define TIMER0_56KHz 70
 /*--TIMER1 CONF--*/
 #define TIMER1_CAPT IOPORT_CREATE_PIN(PORTB,0)
+#define CLEAR_TIMER1 TCNT1 = 0;
+#define TIMER1_FALLING TCCR1B &=~ _BV(ICES1)
+#define TIMER1_RISING TCCR1B |= _BV(ICES1)
 /*--Debug--*/
 #define ENABLE_CLOCK_TIMER0 ture
 #define ENABLE_CLOCK_TIMER1 true
@@ -56,9 +59,10 @@ void Timer1_Conf() {
 	
 	#if ENABLE_INPUT_CAPTURE_TIMER1
 	ioport_set_pin_dir(TIMER1_CAPT, IOPORT_DIR_INPUT);
-	ioport_set_pin_mode(TIMER1_CAPT, IOPORT_MODE_PULLDOWN);
-	TCCR1B = /*_BV(ICNC1) | */_BV(ICES1) | _BV(CS10);
-	TIMSK1 = _BV(ICIE1);
+	//ioport_set_pin_mode(TIMER1_CAPT, IOPORT_MODE_PULLDOWN);
+	TCCR1B = _BV(CS10)/* | _BV(CS12)*/;
+	TIMSK1 = _BV(ICIE1)/* | _BV(TOIE1)*/;
+	/*TCCR1B |= (0 << ICES1);*/
 	#endif
 	
 }

@@ -60,7 +60,7 @@ extern "C" {
 
 /* CONFIG_SYSCLK_PSDIV  to use default if not defined*/
 #ifndef CONFIG_SYSCLK_PSDIV
-#define CONFIG_SYSCLK_PSDIV    SYSCLK_PSDIV_1
+# define CONFIG_SYSCLK_PSDIV    SYSCLK_PSDIV_8
 #endif
 
 /* ! \name Prescaler Setting (relative to CLKsys) */

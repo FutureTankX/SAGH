@@ -16,7 +16,7 @@
 #define TIMER0_30KHz 132
 #define TIMER0_33KHz 120
 #define TIMER0_36KHz 110
-#define TIMER0_38KHz 103
+#define TIMER0_38KHz 105
 #define TIMER0_40KHz 99
 #define TIMER0_56KHz 70
 /*--TIMER1 CONF--*/
@@ -46,9 +46,9 @@ void Timer0_Conf() {
 	#if ENABLE_CTC_TIMER0
 	ioport_set_pin_dir(TIMER0_OUT, IOPORT_DIR_OUTPUT);
 	TCCR0A = _BV(COM0A0) | _BV(WGM01);
-	TIMSK0 = _BV(OCIE0A);
-	TCCR0B = _BV(CS00);
-	#endif
+	/*TIMSK0 = _BV(OCIE0A);*/
+	TCCR0B = _BV(WGM02) | _BV(CS00);
+	#endif	
 }
 
 void Timer1_Conf() {
@@ -60,7 +60,7 @@ void Timer1_Conf() {
 	#if ENABLE_INPUT_CAPTURE_TIMER1
 	ioport_set_pin_dir(TIMER1_CAPT, IOPORT_DIR_INPUT);
 	//ioport_set_pin_mode(TIMER1_CAPT, IOPORT_MODE_PULLDOWN);
-	TCCR1B = _BV(CS10)/* | _BV(CS12)*/;
+	TCCR1B = _BV(CS11)/* | _BV(CS12)*/;
 	TIMSK1 = _BV(ICIE1)/* | _BV(TOIE1)*/;
 	/*TCCR1B |= (0 << ICES1);*/
 	#endif

@@ -58,9 +58,6 @@
 // From module: Common build items for user board support templates
 #include <user_board.h>
 
-// From module: Delay routines
-#include <delay.h>
-
 // From module: Generic board support
 #include <board.h>
 
@@ -79,5 +76,8 @@
 
 // From module: System Clock Control - MEGA RF A1 implementation
 #include <sysclk.h>
+
+// From module: USART - Universal Synchronous/Asynchronous Receiver/Transmitter
+#include <usart_mega.h>
 
 #endif // ASF_H

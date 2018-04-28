@@ -15,7 +15,7 @@
 
 #include <avr/pgmspace.h>
 #include <avr/io.h>
-#include <util/delay.h>
+#include <delay/delay_x.h>
 #include "nokia5110_chars.h"
 
 

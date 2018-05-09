@@ -14,7 +14,6 @@
 
 void board_init(void)
 {
-	sysclk_enable_module(POWER_RED_REG0,PRTIM0);
 	/* This function is meant to contain board-specific initialization code
 	 * for, e.g., the I/O pins. The initialization can rely on application-
 	 * specific board configuration, found in conf_board.h.

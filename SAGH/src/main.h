@@ -25,13 +25,20 @@
 #include <delay/delay_x.h>
 #include <LCD/nokia5110.h>
 
+
 #define HIGH 1
 #define LOW 0
+
+#define START_HIGH 3400
+#define START_LOW 1536
+#define LONG 1250
+#define SHORT 380
 
 void WDT_off(void);
 void mark(uint16_t time);
 void space(uint16_t time);
 void sendbyte(uint8_t Byte);
 void Array_to_Byte (uint8_t __out_bytes_arr[], uint8_t __arr[], uint16_t size);
+void Reset_all(void);
 
 #endif /* MAIN_H_ */

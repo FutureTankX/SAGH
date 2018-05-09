@@ -94,9 +94,9 @@ void nokia_lcd_init(void)
 	/* Reset display */
 	PORT_LCD |= _BV(LCD_RST);
 	PORT_LCD |= _BV(LCD_SCE);
-	_delay_ms(10);
+	__delay_ms(10);
 	PORT_LCD &= ~_BV(LCD_RST);
-	_delay_ms(70);
+	__delay_ms(70);
 	PORT_LCD |= _BV(LCD_RST);
 
 	/*

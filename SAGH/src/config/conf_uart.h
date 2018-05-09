@@ -25,13 +25,14 @@ static FILE std_uartin = FDEV_SETUP_STREAM(NULL, USART_Receive, _FDEV_SETUP_READ
 
 void USART_Init(unsigned int ubrr)
 {
+	/*Enable Power*/
+	PRR &= ~(1 << PRUSART0);
 	/*Set baud rate */
 	UBRR0H = (unsigned char)(ubrr>>8);
 	UBRR0L = (unsigned char)ubrr;
 	/*Enable receiver and transmitter */
 	UCSR0B = _BV(RXEN0) | _BV(TXEN0);
 	/* Set frame format: 8 data, 1 stop bit */
-	/*UCSR0C = _BV(UCPOL0);*/
 	/* Config printf to use USART */
 	stdout = &std_uartout;
 	stdin = &std_uartin;

@@ -12,21 +12,23 @@
 /*--TIMER0 CONF--*/
 #define TIMER0_OUT IOPORT_CREATE_PIN(PORTD,6)
 #define TIMER0_FREQ OCR0A
+#define TIMER0_PRESCALER 1
+#define TIMER0_FREQ_CALC(freq) (8000/(2*TIMER0_PRESCALER*freq))
 /*--TIMER0 FREQ SELECT--*/
-#define TIMER0_30KHz 132
-#define TIMER0_33KHz 120
-#define TIMER0_36KHz 110
-#define TIMER0_38KHz 104
-#define TIMER0_40KHz 99
-#define TIMER0_56KHz 70
+#define TIMER0_30KHz TIMER0_FREQ_CALC(30)
+#define TIMER0_33KHz TIMER0_FREQ_CALC(33)
+#define TIMER0_36KHz TIMER0_FREQ_CALC(36)
+#define TIMER0_38KHz TIMER0_FREQ_CALC(39)
+#define TIMER0_40KHz TIMER0_FREQ_CALC(40)
+#define TIMER0_56KHz TIMER0_FREQ_CALC(56)
 /*--TIMER1 CONF--*/
 #define TIMER1_CAPT IOPORT_CREATE_PIN(PORTB,0)
 #define CLEAR_TIMER1 TCNT1 = 0;
 #define TIMER1_FALLING TCCR1B &=~ _BV(ICES1)
 #define TIMER1_RISING TCCR1B |= _BV(ICES1)
 /*--Debug--*/
-#define ENABLE_CLOCK_TIMER0 ture
-#define ENABLE_CLOCK_TIMER1 true
+#define ENABLE_CLOCK_TIMER0 PRR &= ~(1 << PRTIM0);
+#define ENABLE_CLOCK_TIMER1 PRR &= ~(1 << PRTIM1);
 #define ENABLE_CTC_TIMER0 true
 #define ENABLE_INPUT_CAPTURE_TIMER1 true
 
@@ -39,9 +41,7 @@ void Timer1_Conf(void);
 
 void Timer0_Conf() {
 	
-	#if ENABLE_CLOCK_TIMER0
-	PRR = (0 << PRTIM0);
-	#endif
+	ENABLE_CLOCK_TIMER0
 
 	#if ENABLE_CTC_TIMER0
 	ioport_set_pin_dir(TIMER0_OUT, IOPORT_DIR_OUTPUT);
@@ -53,10 +53,8 @@ void Timer0_Conf() {
 
 void Timer1_Conf() {
 	
-	#if ENABLE_CLOCK_TIMER1
-	PRR = (0 << PRTIM1);
-	#endif
-	
+	ENABLE_CLOCK_TIMER1
+
 	#if ENABLE_INPUT_CAPTURE_TIMER1
 	ioport_set_pin_dir(TIMER1_CAPT, IOPORT_DIR_INPUT);
 	//ioport_set_pin_mode(TIMER1_CAPT, IOPORT_MODE_PULLDOWN);
@@ -64,8 +62,6 @@ void Timer1_Conf() {
 	TIMSK1 = _BV(ICIE1)/* | _BV(TOIE1)*/;
 	/*TCCR1B |= (0 << ICES1);*/
 	#endif
-	
 }
-
 #endif /* CONF_TIMER_H_ */
 
